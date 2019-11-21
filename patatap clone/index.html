@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Circles</title>
+  <link rel="stylesheet" href="/lib/style.css">
+  <script type="text/javascript" src="/lib/paper-full.js"></script>
+  <script type="text/javascript" src="/lib/howler.min.js"></script>
+  <script type="text/paperscript" canvas="myCanvas">
+    
+
+    sounds = ['airhorn.mp3', 'squiggle.mp3', 'cartoon_ping.mp3'];
+
+    var keyData = {
+      q: {
+        sound: new Howl({
+          src: ['/assets/sounds/trombone.mp3']
+        }),
+        color: Color.random()
+      },
+      w: {
+        sound: new Howl({
+          src: ['/assets/sounds/My friends call me whiskers.mp3']
+        }),
+        color: Color.random()
+      },
+      e: {
+        sound: new Howl({
+          src: ['/assets/sounds/cartoon_squash.mp3']
+        }),
+        color: Color.random()
+      },
+      r: {
+        sound: new Howl({
+          src: ['/assets/sounds/cartoon_ping.mp3']
+        }),
+        color: Color.random()
+      },
+        t: {
+        sound: new Howl({
+          src: ['/assets/sounds/thats something else.mp3']
+        }),
+        color: Color.random()
+      },
+      y: {
+        sound: new Howl({
+          src: ['/assets/sounds/bounce_drum.mp3']
+        }),
+        color: Color.random()
+      },
+      u: {
+        sound: new Howl({
+          src: ['/assets/sounds/flash-2.mp3']
+        }),
+        color: Color.random()
+      },
+      i: {
+        sound: new Howl({
+          src: ['/assets/sounds/cartoon_arrow.mp3']
+        }),
+        color: Color.random()
+      },
+      o: {
+        sound: new Howl({
+          src: ['/assets/sounds/twang_metal.mp3']
+        }),
+        color: Color.random()
+      },
+      p: {
+        sound: new Howl({
+          src: ['/assets/sounds/Whats your favorite planet.mp3']
+        }),
+        color: Color.random()
+      },
+      a: {
+        sound: new Howl({
+          src: ['/assets/sounds/Air_Wrench.mp3']
+        }),
+        color: Color.random()
+      },
+      s: {
+        sound: new Howl({
+          src: ['/assets/sounds/airhorn.mp3']
+        }),
+        color: Color.random()
+      },
+        d: {
+        sound: new Howl({
+          src: ['/assets/sounds/piston-2.mp3']
+        }),
+        color: Color.random()
+      },
+      f: {
+        sound: new Howl({
+          src: ['/assets/sounds/Fart.mp3']
+        }),
+        color: Color.random()
+      },
+      g: {
+        sound: new Howl({
+          src: ['/assets/sounds/prism-2.mp3']
+        }),
+        color: Color.random()
+      },
+      h: {
+        sound: new Howl({
+          src: ['/assets/sounds/Hey.mp3']
+        }),
+        color: Color.random()
+      },
+      j: {
+        sound: new Howl({
+          src: ['/assets/sounds/splits.mp3']
+        }),
+        color: Color.random()
+      },
+      k: {
+        sound: new Howl({
+          src: ['/assets/sounds/mosquito_pass.mp3']
+        }),
+        color: Color.random()
+      },
+      l: {
+        sound: new Howl({
+          src: ['/assets/sounds/Splash.mp3']
+        }),
+        color: Color.random()
+      },
+      z: {
+        sound: new Howl({
+          src: ['/assets/sounds/Swords.mp3']
+        }),
+        color: Color.random()
+      },
+      x: {
+        sound: new Howl({
+          src: ['/assets/sounds/timer.mp3']
+        }),
+        color: Color.random()
+      },
+      c: {
+        sound: new Howl({
+          src: ['/assets/sounds/ufo.mp3']
+        }),
+        color: Color.random()
+      },
+      v: {
+        sound: new Howl({
+          src: ['/assets/sounds/veil.mp3']
+        }),
+        color: Color.random()
+      },
+      b: {
+        sound: new Howl({
+          src: ['/assets/sounds/wipe.mp3']
+        }),
+        color: Color.random()
+      },
+      n: {
+        sound: new Howl({
+          src: ['/assets/sounds/zig-zag.mp3']
+        }),
+        color: Color.random()
+      },
+      m: {
+        sound: new Howl({
+          src: ['/assets/sounds/How about this Mad Cow Disease.mp3']
+        }),
+        color: Color.random()
+      }
+    };
+
+
+  var circles = [];
+  
+  function onKeyDown(event) {
+    if(keyData[event.key]) {
+      var maxPoint = new Point(view.size.width, view.size.height);
+      var randomPoint = Point.random();
+      var point = maxPoint * randomPoint
+      var newCircle = new Path.Circle(point, 500);
+      newCircle.fillColor = keyData[event.key].color;
+      <!-- console.log(keyData[event.key].sound); -->
+      keyData[event.key].sound.play();   
+    circles.push(newCircle);
+    var raster = new Raster('lilme');
+    raster.position = ((maxPoint * randomPoint), (maxPoint * randomPoint));
+    raster.scale(Math.random());
+    raster.rotate(Math.random() * 360);
+   };
+  }
+
+   function onFrame(event){
+     for(var i = 0; i < circles.length; i++) {
+       circles[i].fillColor.hue += 1;
+       circles[i].scale(.9);
+       if(circles[i].area < 1){
+        circles[i].remove(); // remove the circle from the canvas
+        circles.splice(i, 1); // remove the circle from the array
+       }
+     }
+   };
+
+
+
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas" resize></canvas>
+  <img src="/assets/images/lilme.png" id="lilme" alt="" style="display: none;">
+</body>
+</html>
